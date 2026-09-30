@@ -1,0 +1,6 @@
+{
+  "name": "Vypax - Operating Layer for International Trade",
+  "description": "Vypax simplifies international trade and logistics workflows, connecting trade discovery, cost intelligence, documentation, shipment execution, and tracking into one operational workspace.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
