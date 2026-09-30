@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { Settings, Building2, Globe, Shield, Terminal, Save, Check } from 'lucide-react';
+import { Settings, Building2, Globe, Shield, Terminal, Save, Check, Github, ExternalLink, Copy } from 'lucide-react';
 import { DEMO_COMPANY } from '../data/mockData';
 
 export const SettingsPage: React.FC = () => {
@@ -188,6 +188,89 @@ export const SettingsPage: React.FC = () => {
               <span className="rounded bg-slate-200 px-2 py-0.5 text-[10px] text-slate-600">
                 SANDBOX SIMULATION
               </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Deployment & GitHub Repository Card */}
+        <div className="rounded-lg border border-slate-200 bg-white p-5 space-y-3">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div className="flex items-center gap-2">
+              <Github className="h-4 w-4 text-slate-700" />
+              <h2 className="font-semibold text-slate-900 uppercase tracking-wider text-xs">
+                Deployment & GitHub Repository
+              </h2>
+            </div>
+            <span className="font-mono text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-200 rounded px-2 py-0.5">
+              LIVE DEPLOYMENT
+            </span>
+          </div>
+
+          <div className="space-y-3">
+            <div>
+              <span className="text-slate-500 block text-[11px] mb-1">Live Application URL</span>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  readOnly
+                  value="https://ais-pre-hmbzbjjn2jvkbm4x5aakuy-305700405558.asia-southeast1.run.app"
+                  className="flex-1 font-mono text-xs bg-slate-50 border border-slate-200 rounded px-2.5 py-1.5 text-slate-800"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText("https://ais-pre-hmbzbjjn2jvkbm4x5aakuy-305700405558.asia-southeast1.run.app");
+                    showToast("Live URL copied to clipboard");
+                  }}
+                  className="flex items-center gap-1 rounded border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                  title="Copy URL"
+                >
+                  <Copy className="h-3.5 w-3.5" />
+                  <span>Copy</span>
+                </button>
+                <a
+                  href="https://ais-pre-hmbzbjjn2jvkbm4x5aakuy-305700405558.asia-southeast1.run.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 rounded bg-slate-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-slate-800"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  <span>Visit</span>
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <span className="text-slate-500 block text-[11px] mb-1">GitHub Repository</span>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  readOnly
+                  value="https://github.com/gyanendra731466/vypax"
+                  className="flex-1 font-mono text-xs bg-slate-50 border border-slate-200 rounded px-2.5 py-1.5 text-slate-800"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText("https://github.com/gyanendra731466/vypax");
+                    showToast("GitHub URL copied to clipboard");
+                  }}
+                  className="flex items-center gap-1 rounded border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                  title="Copy GitHub URL"
+                >
+                  <Copy className="h-3.5 w-3.5" />
+                  <span>Copy</span>
+                </button>
+                <a
+                  href="https://github.com/gyanendra731466/vypax"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 rounded border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                >
+                  <Github className="h-3.5 w-3.5" />
+                  <span>Repository</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>

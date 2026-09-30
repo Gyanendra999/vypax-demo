@@ -6,6 +6,14 @@ It unites trade discovery, landed cost economics, documentation, shipment milest
 
 ---
 
+## Live Demo & Deployment
+
+- **Live Application URL**: [https://ais-pre-hmbzbjjn2jvkbm4x5aakuy-305700405558.asia-southeast1.run.app](https://ais-pre-hmbzbjjn2jvkbm4x5aakuy-305700405558.asia-southeast1.run.app)
+- **Development Environment**: [https://ais-dev-hmbzbjjn2jvkbm4x5aakuy-305700405558.asia-southeast1.run.app](https://ais-dev-hmbzbjjn2jvkbm4x5aakuy-305700405558.asia-southeast1.run.app)
+- **Applet ID**: `aa3f7cdc-e2b2-4af4-a18d-2606053d2bc4`
+
+---
+
 ## The Workflow Hypothesis
 
 ```text

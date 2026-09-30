@@ -12,6 +12,7 @@ import {
   Globe,
   FileCheck,
   ShieldCheck,
+  Github,
 } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
@@ -44,7 +45,17 @@ export const LandingPage: React.FC = () => {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
+          <a
+            href="https://github.com/gyanendra731466/vypax"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+          >
+            <Github className="h-3.5 w-3.5" />
+            <span>GitHub</span>
+          </a>
+
           <Link
             to="/dashboard"
             className="flex items-center gap-1.5 rounded-md bg-slate-900 px-3.5 py-1.5 text-xs font-medium text-white shadow-xs hover:bg-slate-800 transition-colors"
@@ -373,10 +384,19 @@ export const LandingPage: React.FC = () => {
       {/* Footer */}
       <footer className="border-t border-slate-800 bg-slate-950 py-8 text-xs text-slate-500">
         <div className="mx-auto max-w-5xl px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <span className="font-bold text-slate-300 tracking-tight">vypax</span>
             <span>·</span>
             <span>Operating layer for international trade</span>
+            <span>·</span>
+            <a
+              href="https://github.com/gyanendra731466/vypax"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-white transition-colors underline"
+            >
+              GitHub Repository
+            </a>
           </div>
           <p className="text-[11px]">
             Demo Environment · Fictional operational data for prototype validation

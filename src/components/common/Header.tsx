@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Plus, HelpCircle, Layers, Menu, X } from 'lucide-react';
+import { Plus, HelpCircle, Layers, Menu, X, Github } from 'lucide-react';
 
 interface HeaderProps {
   onOpenNewShipment: () => void;
@@ -99,7 +99,18 @@ export const Header: React.FC<HeaderProps> = ({
       </nav>
 
       {/* Zone 3: 1-2 Primary Action Points */}
-      <div className="flex items-center gap-2.5">
+      <div className="flex items-center gap-2">
+        <a
+          href="https://github.com/gyanendra731466/vypax"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex h-8 items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+          title="View on GitHub"
+        >
+          <Github className="h-3.5 w-3.5" />
+          <span className="hidden xl:inline">GitHub</span>
+        </a>
+
         <button
           onClick={onToggleAssistant}
           className={`flex h-8 items-center gap-1.5 rounded-md border px-2.5 text-xs font-medium transition-colors ${
