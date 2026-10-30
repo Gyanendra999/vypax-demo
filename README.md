@@ -1,12 +1,14 @@
-# Vypax — Operating Layer for International Trade
+# Vyaapx — Operating Layer for International Trade
 
-**Vypax** is a modern B2B technology platform for simplifying international trade and logistics execution workflows.
+**Vyaapx** is a modern B2B technology platform for simplifying international trade and logistics execution workflows.
 
 It unites trade discovery, landed cost economics, documentation, shipment milestones, and tracking into a single operational workspace.
 
 ---
 
 ## Live Demo & Deployment
+
+- **Live Application URL**: [https://ais-pre-hmbzbjjn2jvkbm4x5aakuy-305700405558.asia-southeast1.run.app](https://ais-pre-hmbzbjjn2jvkbm4x5aakuy-305700405558.asia-southeast1.run.app)
 - **Development Environment**: [https://ais-dev-hmbzbjjn2jvkbm4x5aakuy-305700405558.asia-southeast1.run.app](https://ais-dev-hmbzbjjn2jvkbm4x5aakuy-305700405558.asia-southeast1.run.app)
 - **Applet ID**: `aa3f7cdc-e2b2-4af4-a18d-2606053d2bc4`
 
@@ -37,7 +39,7 @@ Discover → Calculate → Prepare → Book → Execute → Track → Deliver
 - **Shipments Directory & Detail**: End-to-end shipment lifecycle management featuring schematic maritime route visualizations and sequential milestone progression.
 - **Partners Directory**: Structured directory for freight forwarders, container freight stations, licensed Customs Brokers, and transporters.
 - **Immutable Activity Feed**: Chronological log of document approvals, status updates, and booking requests.
-- **Vypax Trade Assistant**: Domain-aware operational assistant providing guidance on Incoterms 2020, customs classification, and compliance.
+- **Vyaapx Trade Assistant**: Domain-aware operational assistant providing guidance on Incoterms 2020, customs classification, and compliance.
 
 ---
 
@@ -124,7 +126,7 @@ npm run build
 
 To push this codebase to your own GitHub repository:
 
-1. Create a new repository on [GitHub](https://github.com/new) (e.g. `vypax`).
+1. Create a new repository on [GitHub](https://github.com/new) (e.g. `vyaapx`).
 2. Run the following commands in the project directory:
 
 ```bash
@@ -135,13 +137,13 @@ git init
 git add .
 
 # Create the initial commit
-git commit -m "Initial commit: Vypax operating layer for international trade"
+git commit -m "Initial commit: Vyaapx operating layer for international trade"
 
 # Rename branch to main
 git branch -M main
 
 # Connect to your GitHub repository (replace with your repo URL)
-git remote add origin https://github.com/<YOUR-USERNAME>/vypax.git
+git remote add origin https://github.com/<YOUR-USERNAME>/vyaapx.git
 
 # Push to GitHub
 git push -u origin main

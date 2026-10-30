@@ -11,10 +11,12 @@ import { ShipmentDetailPage } from './pages/ShipmentDetailPage';
 import { PartnersPage } from './pages/PartnersPage';
 import { ActivityPage } from './pages/ActivityPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { AuthProvider } from './context/AuthContext';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
       <Routes>
         {/* Landing Page */}
         <Route path="/" element={<LandingPage />} />
@@ -35,6 +37,7 @@ export default function App() {
         {/* Catch-all Fallback */}
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }

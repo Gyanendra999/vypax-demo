@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Plus, HelpCircle, Layers, Menu, X, Github } from 'lucide-react';
+import { Plus, HelpCircle, Layers, Menu, X, Github, ChevronDown, User } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 interface HeaderProps {
   onOpenNewShipment: () => void;
@@ -18,6 +19,7 @@ export const Header: React.FC<HeaderProps> = ({
   isMobileMenuOpen,
 }) => {
   const location = useLocation();
+  const { user, currentWorkspace, openAuthModal } = useAuth();
 
   const isNavActive = (path: string) => {
     if (path === '/dashboard' && (location.pathname === '/dashboard' || location.pathname === '/')) {
@@ -40,18 +42,28 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         )}
 
-        <Link to="/dashboard" className="group flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-900 text-white shadow-xs">
-            <Layers className="h-4 w-4 text-white" />
-          </div>
-          <span className="text-base font-bold tracking-tight text-slate-900">
-            vypax
-          </span>
-          <span className="hidden items-center text-xs font-normal text-slate-400 sm:inline-flex">
-            <span className="mx-1.5 text-slate-300">·</span>
-            <span className="font-mono text-[11px] tracking-wider text-slate-500 uppercase">Demo Workspace</span>
-          </span>
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link to="/dashboard" className="group flex items-center gap-2">
+            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-900 text-white shadow-xs">
+              <Layers className="h-4 w-4 text-white" />
+            </div>
+            <span className="text-base font-bold tracking-tight text-slate-900">
+              vyaapx
+            </span>
+          </Link>
+          <button
+            type="button"
+            onClick={openAuthModal}
+            className="hidden items-center text-xs font-normal text-slate-400 sm:inline-flex hover:text-slate-700 cursor-pointer transition-colors"
+            title="Switch workspace / Manage organization"
+          >
+            <span className="mx-1 text-slate-300">·</span>
+            <span className="font-mono text-[11px] tracking-wider text-slate-500 uppercase flex items-center gap-1 hover:underline">
+              {currentWorkspace ? currentWorkspace.workspace.name : 'Demo Workspace'}
+              <ChevronDown className="h-2.5 w-2.5 text-slate-400" />
+            </span>
+          </button>
+        </div>
       </div>
 
       {/* Zone 2: 4-6 Clean Text Navigation Links */}
@@ -101,7 +113,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Zone 3: 1-2 Primary Action Points */}
       <div className="flex items-center gap-2">
         <a
-          href="https://github.com/gyanendra731466/vypax"
+          href="https://github.com/gyanendra731466/vyaapx"
           target="_blank"
           rel="noopener noreferrer"
           className="flex h-8 items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors"
@@ -118,10 +130,22 @@ export const Header: React.FC<HeaderProps> = ({
               ? 'border-blue-600 bg-blue-50 text-blue-800'
               : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
           }`}
-          title="Vypax Trade Assistant"
+          title="Vyaapx Trade Assistant"
         >
           <HelpCircle className="h-3.5 w-3.5" />
           <span className="hidden sm:inline">Trade Assistant</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={openAuthModal}
+          className="flex h-8 items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+          title="Account & Workspaces"
+        >
+          <User className="h-3.5 w-3.5 text-slate-500" />
+          <span className="hidden md:inline font-medium truncate max-w-[85px]">
+            {user ? user.fullName.split(' ')[0] : 'Sign In'}
+          </span>
         </button>
 
         <button

@@ -75,7 +75,7 @@ export const DocumentPreviewModal: React.FC<DocumentPreviewModalProps> = ({
           <div className="mx-auto max-w-2xl rounded border border-slate-300 bg-white p-6 shadow-xs text-xs font-sans text-slate-800">
             {/* Watermark / Disclaimer Banner */}
             <div className="mb-4 border-b border-amber-200 bg-amber-50 p-2 text-center text-[10px] text-amber-800 font-mono">
-              DEMO TRADE SPECIMEN · PREPARED IN VYPAX WORKSPACE · FOR OPERATIONAL PLANNING
+              DEMO TRADE SPECIMEN · PREPARED IN VYAAPX WORKSPACE · FOR OPERATIONAL PLANNING
             </div>
 
             {/* Document Header */}
@@ -245,7 +245,7 @@ export const DocumentPreviewModal: React.FC<DocumentPreviewModalProps> = ({
                   For {DEMO_COMPANY.name}
                 </p>
                 <div className="my-3 inline-block rounded border border-dashed border-slate-300 px-4 py-2 font-mono text-[10px] text-slate-400">
-                  [DIGITALLY SIGNED VIA VYPAX]
+                  [DIGITALLY SIGNED VIA VYAAPX]
                 </div>
                 <p className="text-[11px] text-slate-600">Authorized Signatory</p>
               </div>

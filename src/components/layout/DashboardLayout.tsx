@@ -4,9 +4,12 @@ import { Header } from '../common/Header';
 import { Sidebar } from '../common/Sidebar';
 import { AssistantPanel } from '../common/AssistantPanel';
 import { NewShipmentModal } from '../common/NewShipmentModal';
+import { AuthModal } from '../common/AuthModal';
 import { tradeService } from '../../services/tradeService';
+import { useAuth } from '../../context/AuthContext';
 
 export const DashboardLayout: React.FC = () => {
+  const { isAuthModalOpen, closeAuthModal } = useAuth();
   const [isAssistantOpen, setIsAssistantOpen] = useState(false);
   const [isNewShipmentOpen, setIsNewShipmentOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -96,6 +99,9 @@ export const DashboardLayout: React.FC = () => {
           }}
         />
       )}
+
+      {/* Auth & Workspace Modal */}
+      <AuthModal isOpen={isAuthModalOpen} onClose={closeAuthModal} />
     </div>
   );
 };

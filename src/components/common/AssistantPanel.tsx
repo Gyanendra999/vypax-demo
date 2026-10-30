@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, HelpCircle, Send, Sparkles, AlertCircle, ExternalLink } from 'lucide-react';
+import { apiClient } from '../../services/apiClient';
 
 interface AssistantPanelProps {
   isOpen: boolean;
@@ -20,7 +21,7 @@ const PRESET_KNOWLEDGE: Record<string, string> = {
   incoterms_diff:
     'FOB (Free On Board) obligates the seller to deliver goods past the ship\'s rail at the named port of loading. From that moment, the buyer assumes all marine freight, transit insurance, import duties, and discharge risk. In contrast, CIF (Cost, Insurance, and Freight) requires the seller to procure and pay for ocean freight and baseline marine insurance up to the destination port, though risk of loss transfers to the buyer once goods are on board.',
   landed_calc:
-    'In Vypax, Estimated Landed Cost is computed as: Product Value (Qty × Unit Price) + Ocean Freight + Transit Cargo Insurance + Destination Customs Duty & Cess + Destination Handling/Port Charges. Under standard WTO valuation rules, ad valorem duty rates apply to the CIF valuation basis. Note that calculations in this demo workspace are illustrative estimates and do not constitute an authoritative legal tax assessment.',
+    'In Vyaapx, Estimated Landed Cost is computed as: Product Value (Qty × Unit Price) + Ocean Freight + Transit Cargo Insurance + Destination Customs Duty & Cess + Destination Handling/Port Charges. Under standard WTO valuation rules, ad valorem duty rates apply to the CIF valuation basis. Note that calculations in this demo workspace are illustrative estimates and do not constitute an authoritative legal tax assessment.',
   hs_codes:
     'Harmonized System (HS) codes are 6-to-10 digit standardized numerical classifications developed by the World Customs Organization. The first 6 digits are harmonized globally (e.g., 8483.40 for gears and gearing), while national customs administrations add trailing subheadings (e.g., 8483.40.00) to determine exact import duties, anti-dumping levies, and regulatory import prohibitions.',
   exception_mgmt:
@@ -32,7 +33,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({ isOpen, onClose 
     {
       id: 'welcome',
       sender: 'assistant',
-      text: 'Good day. I am the Vypax Trade Assistant. I can assist with trade documentation workflows, landed cost breakdowns, Incoterm definitions, and compliance checklists.',
+      text: 'Good day. I am the Vyaapx Trade Assistant. I can assist with trade documentation workflows, landed cost breakdowns, Incoterm definitions, and compliance checklists.',
       timestamp: 'Active',
       disclaimer: true,
     },
@@ -41,7 +42,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({ isOpen, onClose 
 
   if (!isOpen) return null;
 
-  const handleSend = (textToSend?: string) => {
+  const handleSend = async (textToSend?: string) => {
     const query = (textToSend || inputValue).trim();
     if (!query) return;
 
@@ -55,7 +56,26 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({ isOpen, onClose 
     setMessages((prev) => [...prev, userMsg]);
     setInputValue('');
 
-    // Match grounded trade response
+    try {
+      const res = await apiClient.post<{ reply: string }>('/assistant/chat', { message: query });
+      if (res && res.reply) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `a-${Date.now()}`,
+            sender: 'assistant',
+            text: res.reply,
+            timestamp: 'Just now',
+            disclaimer: true,
+          },
+        ]);
+        return;
+      }
+    } catch (e) {
+      // Fallback to grounded trade knowledge if backend or network errors
+    }
+
+    // Match grounded trade response fallback
     setTimeout(() => {
       let reply = '';
       const lower = query.toLowerCase();
@@ -83,7 +103,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({ isOpen, onClose 
       };
 
       setMessages((prev) => [...prev, botMsg]);
-    }, 450);
+    }, 300);
   };
 
   return (
@@ -95,7 +115,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({ isOpen, onClose 
             <HelpCircle className="h-3.5 w-3.5 text-white" />
           </div>
           <div>
-            <h3 className="text-xs font-semibold text-slate-900">Vypax Assistant</h3>
+            <h3 className="text-xs font-semibold text-slate-900">Vyaapx Assistant</h3>
             <p className="text-[10px] text-slate-500">Trade Intelligence & Workflow Guidance</p>
           </div>
         </div>

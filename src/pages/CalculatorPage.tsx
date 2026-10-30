@@ -61,7 +61,7 @@ export const CalculatorPage: React.FC = () => {
   };
 
   const handleCopySummary = () => {
-    const summary = `VYPAX LANDED COST ESTIMATE (DEMO)\nProduct: ${input.productName} (HS ${input.hsCode})\nQuantity: ${input.quantity} units @ $${input.unitPrice}/unit = $${calculation.productValue.toLocaleString()}\nFreight: $${input.freightCost.toLocaleString()} | Insurance: $${input.insuranceCost.toLocaleString()}\nEst. Duty: $${calculation.dutyAmount.toFixed(2)} (${input.dutyRatePercent}%)\nTotal Est. Landed Cost: $${calculation.totalLandedCost.toFixed(2)} ($${calculation.costPerUnit.toFixed(2)}/unit)\nExpected Revenue: $${calculation.expectedRevenue.toLocaleString()} | Est. Gross Profit: $${calculation.estimatedGrossMarginUsd.toFixed(2)} (${calculation.estimatedGrossMarginPercent.toFixed(1)}%)`;
+    const summary = `VYAAPX LANDED COST ESTIMATE (DEMO)\nProduct: ${input.productName} (HS ${input.hsCode})\nQuantity: ${input.quantity} units @ $${input.unitPrice}/unit = $${calculation.productValue.toLocaleString()}\nFreight: $${input.freightCost.toLocaleString()} | Insurance: $${input.insuranceCost.toLocaleString()}\nEst. Duty: $${calculation.dutyAmount.toFixed(2)} (${input.dutyRatePercent}%)\nTotal Est. Landed Cost: $${calculation.totalLandedCost.toFixed(2)} ($${calculation.costPerUnit.toFixed(2)}/unit)\nExpected Revenue: $${calculation.expectedRevenue.toLocaleString()} | Est. Gross Profit: $${calculation.estimatedGrossMarginUsd.toFixed(2)} (${calculation.estimatedGrossMarginPercent.toFixed(1)}%)`;
 
     navigator.clipboard.writeText(summary);
     showToast('Calculation summary copied to clipboard');

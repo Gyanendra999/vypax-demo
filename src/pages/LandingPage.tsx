@@ -26,7 +26,7 @@ export const LandingPage: React.FC = () => {
           <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-900 text-white shadow-xs">
             <Layers className="h-4 w-4 text-white" />
           </div>
-          <span className="text-base font-bold tracking-tight text-slate-900">vypax</span>
+          <span className="text-base font-bold tracking-tight text-slate-900">vyaapx</span>
           <span className="font-mono text-[11px] text-slate-400">· DEMO WORKSPACE</span>
         </div>
 
@@ -47,7 +47,7 @@ export const LandingPage: React.FC = () => {
 
         <div className="flex items-center gap-2.5">
           <a
-            href="https://github.com/gyanendra731466/vypax"
+            href="https://github.com/gyanendra731466/vyaapx"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors"
@@ -78,7 +78,7 @@ export const LandingPage: React.FC = () => {
         </h1>
 
         <p className="mt-5 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-          Vypax brings trade discovery, cost intelligence, documentation, shipment execution, and
+          Vyaapx brings trade discovery, cost intelligence, documentation, shipment execution, and
           tracking into one operational workflow.
         </p>
 
@@ -295,7 +295,7 @@ export const LandingPage: React.FC = () => {
               One operational workspace.
             </h2>
             <p className="mt-3 text-sm text-slate-600">
-              Vypax structures trade operations into interconnected functional modules designed to
+              Vyaapx structures trade operations into interconnected functional modules designed to
               eliminate information loss.
             </p>
           </div>
@@ -365,7 +365,7 @@ export const LandingPage: React.FC = () => {
             Start with one shipment.
           </h2>
           <p className="mt-3 text-sm text-slate-300 leading-relaxed">
-            Experience how Vypax brings clarity to international trade execution. Explore the live
+            Experience how Vyaapx brings clarity to international trade execution. Explore the live
             demo workspace seeded with realistic operational data.
           </p>
 
@@ -385,12 +385,12 @@ export const LandingPage: React.FC = () => {
       <footer className="border-t border-slate-800 bg-slate-950 py-8 text-xs text-slate-500">
         <div className="mx-auto max-w-5xl px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <span className="font-bold text-slate-300 tracking-tight">vypax</span>
+            <span className="font-bold text-slate-300 tracking-tight">vyaapx</span>
             <span>·</span>
             <span>Operating layer for international trade</span>
             <span>·</span>
             <a
-              href="https://github.com/gyanendra731466/vypax"
+              href="https://github.com/gyanendra731466/vyaapx"
               target="_blank"
               rel="noopener noreferrer"
               className="text-slate-400 hover:text-white transition-colors underline"

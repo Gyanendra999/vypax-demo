@@ -93,6 +93,7 @@ export interface Shipment {
   milestones: Milestone[];
   documents: TradeDocument[];
   exceptionNote?: string;
+  isArchived?: boolean;
   createdAt: string;
   updatedAt: string;
 }

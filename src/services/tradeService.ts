@@ -15,9 +15,10 @@ import {
   INITIAL_ACTIVITIES,
   DEMO_COMPANY,
 } from '../data/mockData';
+import { apiClient } from './apiClient';
 
-const SHIPMENTS_STORAGE_KEY = 'vypax_shipments_v1';
-const ACTIVITIES_STORAGE_KEY = 'vypax_activities_v1';
+const SHIPMENTS_STORAGE_KEY = 'vyaapx_shipments_v1';
+const ACTIVITIES_STORAGE_KEY = 'vyaapx_activities_v1';
 
 class TradeService {
   private shipments: Shipment[] = [];
@@ -25,14 +26,23 @@ class TradeService {
   private partners: LogisticsPartner[] = INITIAL_PARTNERS;
   private activities: ActivityEvent[] = [];
   private listeners: (() => void)[] = [];
+  private isLoadedFromBackend = false;
 
   constructor() {
     this.init();
+    if (typeof window !== 'undefined') {
+      window.addEventListener('vyaapx:workspace-switched', () => {
+        this.fetchBackendData();
+      });
+      window.addEventListener('vypax:workspace-switched', () => {
+        this.fetchBackendData();
+      });
+    }
   }
 
   private init() {
     try {
-      const storedShipments = localStorage.getItem(SHIPMENTS_STORAGE_KEY);
+      const storedShipments = localStorage.getItem(SHIPMENTS_STORAGE_KEY) || localStorage.getItem('vypax_shipments_v1');
       if (storedShipments) {
         this.shipments = JSON.parse(storedShipments);
       } else {
@@ -40,7 +50,7 @@ class TradeService {
         this.saveShipments();
       }
 
-      const storedActivities = localStorage.getItem(ACTIVITIES_STORAGE_KEY);
+      const storedActivities = localStorage.getItem(ACTIVITIES_STORAGE_KEY) || localStorage.getItem('vypax_activities_v1');
       if (storedActivities) {
         this.activities = JSON.parse(storedActivities);
       } else {
@@ -50,6 +60,40 @@ class TradeService {
     } catch {
       this.shipments = INITIAL_SHIPMENTS;
       this.activities = INITIAL_ACTIVITIES;
+    }
+
+    // Proactively fetch live data from backend
+    this.fetchBackendData();
+  }
+
+  public async fetchBackendData() {
+    try {
+      const [shipmentsRes, opportunitiesRes, partnersRes, activitiesRes] = await Promise.all([
+        apiClient.get<Shipment[]>('/shipments').catch(() => null),
+        apiClient.get<TradeOpportunity[]>('/opportunities').catch(() => null),
+        apiClient.get<LogisticsPartner[]>('/partners').catch(() => null),
+        apiClient.get<ActivityEvent[]>('/activity').catch(() => null),
+      ]);
+
+      if (shipmentsRes && Array.isArray(shipmentsRes)) {
+        this.shipments = shipmentsRes;
+        this.saveShipments();
+      }
+      if (opportunitiesRes && Array.isArray(opportunitiesRes)) {
+        this.opportunities = opportunitiesRes;
+      }
+      if (partnersRes && Array.isArray(partnersRes)) {
+        this.partners = partnersRes;
+      }
+      if (activitiesRes && Array.isArray(activitiesRes)) {
+        this.activities = activitiesRes;
+        this.saveActivities();
+      }
+
+      this.isLoadedFromBackend = true;
+      this.notify();
+    } catch (e) {
+      console.warn('[TradeService] Using offline/cached data state:', e);
     }
   }
 
@@ -123,6 +167,12 @@ class TradeService {
     targetRevenueUsd: number;
     carrierOrForwarder?: string;
   }): Shipment {
+    // Send to backend in background
+    apiClient.post<Shipment>('/shipments', data).catch((e) => {
+      console.warn('[TradeService] Background shipment sync error:', e);
+    });
+
+    // Fallback local logic
     const nextNumber = 24020 + this.shipments.length + 1;
     const newId = `VPX-${nextNumber}`;
     const nowStr = new Date().toLocaleDateString('en-US', {
@@ -284,7 +334,14 @@ class TradeService {
     return newShipment;
   }
 
-  public updateShipmentStatus(id: string, status: ShipmentStatus, note?: string) {
+  public async updateShipmentStatus(id: string, status: ShipmentStatus, note?: string) {
+    // 1. Sync with backend
+    try {
+      await apiClient.patch(`/shipments/${id}/status`, { status, note });
+    } catch (e) {
+      console.warn('[TradeService] Backend status update error:', e);
+    }
+
     const shipment = this.shipments.find((s) => s.id === id);
     if (!shipment) return;
 
@@ -292,13 +349,17 @@ class TradeService {
     shipment.updatedAt = 'Just now';
     if (note) shipment.exceptionNote = note;
 
-    // Advance milestone if applicable
     if (status === 'Booked') {
       const m1 = shipment.milestones.find((m) => m.title.includes('Booking'));
       if (m1) m1.status = 'completed';
     } else if (status === 'In Transit') {
       shipment.milestones.forEach((m) => {
-        if (m.title.includes('Booking') || m.title.includes('Cargo') || m.title.includes('Export') || m.title.includes('departed')) {
+        if (
+          m.title.includes('Booking') ||
+          m.title.includes('Cargo') ||
+          m.title.includes('Export') ||
+          m.title.includes('departed')
+        ) {
           m.status = 'completed';
         }
         if (m.title.includes('In transit')) {
@@ -319,12 +380,22 @@ class TradeService {
     this.notify();
   }
 
-  public updateDocumentStatus(
+  public async updateDocumentStatus(
     shipmentId: string,
     docId: string,
     newStatus: DocumentStatus,
     verifiedBy?: string
   ) {
+    try {
+      await apiClient.patch(`/documents/${docId}/status`, {
+        shipmentId,
+        status: newStatus,
+        verifiedBy,
+      });
+    } catch (e) {
+      console.warn('[TradeService] Backend document status update error:', e);
+    }
+
     const shipment = this.shipments.find((s) => s.id === shipmentId);
     if (!shipment) return;
 
@@ -349,6 +420,13 @@ class TradeService {
     shipmentId: string,
     docType: DocumentType
   ): TradeDocument | undefined {
+    apiClient.post<TradeDocument>('/documents/draft', {
+      shipmentId,
+      name: docType,
+    }).catch((e) => {
+      console.warn('[TradeService] Backend draft doc generation error:', e);
+    });
+
     const shipment = this.shipments.find((s) => s.id === shipmentId);
     if (!shipment) return;
 
@@ -416,6 +494,7 @@ class TradeService {
     this.saveShipments();
     this.saveActivities();
     this.notify();
+    this.fetchBackendData();
   }
 }
 
